@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BodyFlow Onboarding</title>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1546640610237888');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1546640610237888&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+<style>
+  :root {
+    --coral: #FF6B4A;
+    --coral-text: #E5532F;
+    --coral-light: #FFE3D4;
+    --gray-text: #8A8A86;
+    --gray-light: #F2F1EF;
+    --green: #4CAF50;
+    --amber: #F5A623;
+    --dark-text: #2C2C2A;
+    --border-radius: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #ECEAE7;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    color: var(--dark-text);
+  }
+  #phone-wrap {
+    width: 100%; max-width: 420px; background: #fff;
+    min-height: 100vh; display: flex; flex-direction: column;
+    position: relative; box-shadow: 0 0 40px rgba(0,0,0,0.08);
+  }
+  #app { flex: 1; display: flex; flex-direction: column; }
+  .screen { display: flex; flex-direction: column; min-height: 100vh; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+  .topbar { display:flex; align-items:center; gap:12px; padding:14px 16px; border-bottom:1px solid var(--gray-light); }
+  .back-btn { background:var(--gray-light); border:none; width:34px; height:34px; border-radius:50%; font-size:16px; cursor:pointer; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+  .back-btn:disabled { opacity:0.3; cursor:default; }
+  .logo { display:flex; align-items:center; gap:6px; font-weight:800; font-size:15px; flex-shrink:0; }
+  .logo-mark { width:22px; height:22px; border-radius:6px; background:linear-gradient(135deg,var(--coral),var(--amber)); }
+  .progress-track { display:flex; gap:0; flex:1; }
+  .progress-bar { height:6px; border-radius:3px; background:var(--gray-light); overflow:hidden; }
+  .progress-fill { height:100%; background:var(--green); transition:width 0.3s ease; border-radius:3px; }
+
+  .content { flex:1; display:flex; flex-direction:column; padding:24px 20px 100px; }
+  .content.no-pad-bottom { padding-bottom:24px; }
+  .q-title { font-size:24px; font-weight:800; line-height:1.3; margin-bottom:8px; }
+  .q-subtitle { font-size:14px; color:var(--gray-text); margin-bottom:20px; line-height:1.5; }
+
+  .footer-cta { position:sticky; bottom:0; background:linear-gradient(to top,#fff 70%,rgba(255,255,255,0)); padding:20px 20px 24px; }
+  .btn-primary { width:100%; background:var(--coral); color:#fff; border:none; border-radius:14px; padding:16px; font-size:16px; font-weight:700; cursor:pointer; transition:opacity 0.2s,transform 0.1s; }
+  .btn-primary:active { transform:scale(0.98); }
+  .btn-primary:disabled { opacity:0.4; cursor:default; }
+  .btn-secondary { width:100%; background:transparent; color:var(--dark-text); border:2px solid var(--gray-light); border-radius:14px; padding:14px; font-size:15px; font-weight:700; cursor:pointer; }
+
+  /* Hero */
+  .hero-screen { flex:1; display:flex; flex-direction:column; background:#fff; }
+  .hero-topbar { display:flex; align-items:center; gap:6px; padding:16px 20px 0; }
+  .hero-topbar .logo-mark { width:26px; height:26px; border-radius:8px; background:linear-gradient(135deg,var(--coral),var(--amber)); }
+  .hero-topbar .logo-text { font-size:18px; font-weight:800; color:var(--coral-text); font-style:italic; letter-spacing:-0.5px; }
+
+  /* Gender */
+  .gender-row { display:flex; gap:12px; margin-bottom:24px; }
+  .gender-card { flex:1; border:2px solid var(--gray-light); border-radius:var(--border-radius); padding:24px 12px; text-align:center; cursor:pointer; transition:all 0.15s; }
+  .gender-card.selected { border-color:var(--coral); background:var(--coral-light); }
+  .gender-avatar { font-size:40px; margin-bottom:10px; }
+  .gender-label { font-weight:700; font-size:14px; }
+  .legal-text { font-size:11px; color:var(--gray-text); line-height:1.6; margin-top:auto; }
+  .legal-text a { color:var(--coral-text); text-decoration:underline; }
+
+  .stat-screen { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:40px 24px; }
+  .stat-image { font-size:64px; margin-bottom:16px; }
+  .stat-number { font-size:48px; font-weight:800; color:var(--coral-text); margin-bottom:8px; }
+  .stat-label { font-size:15px; color:var(--gray-text); line-height:1.6; max-width:280px; }
+
+  .options { display:flex; flex-direction:column; gap:10px; }
+  .option { border:2px solid var(--gray-light); border-radius:14px; padding:16px 18px; display:flex; align-items:center; justify-content:space-between; cursor:pointer; font-size:15px; font-weight:600; transition:all 0.15s; }
+  .option.selected { border-color:var(--coral); background:var(--coral-light); color:var(--coral-text); }
+  .opt-icon { font-size:20px; }
+  .skip-link { text-align:center; color:var(--gray-text); font-size:14px; font-weight:600; margin-top:16px; cursor:pointer; text-decoration:underline; }
+
+  .reframe-image { font-size:64px; text-align:center; margin:20px 0; }
+  .reframe-card { background:var(--coral-light); border-radius:var(--border-radius); padding:22px; }
+  .reframe-card h2 { font-size:20px; font-weight:800; margin-bottom:10px; color:#4A1B0C; }
+  .reframe-card p { font-size:14px; color:#4A1B0C; line-height:1.6; margin-bottom:14px; }
+  .chart-card { background:#fff; border-radius:12px; padding:12px; }
+  .chart-svg-wrap { width:100%; height:110px; }
+
+  .unit-toggle { display:flex; gap:8px; margin-bottom:24px; }
+  .unit-btn { flex:1; border:2px solid var(--gray-light); background:#fff; border-radius:10px; padding:10px; font-weight:700; font-size:14px; cursor:pointer; color:var(--gray-text); }
+  .unit-btn.active { border-color:var(--coral); color:var(--coral-text); background:var(--coral-light); }
+  .numeric-display { flex:1; display:flex; align-items:center; justify-content:center; }
+  .numeric-value-row { display:flex; align-items:center; gap:16px; }
+  .numeric-stepper { display:flex; flex-direction:column; gap:8px; }
+  .step-btn { width:40px; height:40px; border-radius:50%; border:2px solid var(--gray-light); background:#fff; font-size:20px; font-weight:700; cursor:pointer; color:var(--coral-text); }
+  .numeric-value { font-size:56px; font-weight:800; min-width:100px; text-align:center; border:none; background:transparent; font-family:inherit; color:inherit; }
+  .numeric-value:focus { outline:none; border-bottom:3px solid var(--coral); }
+  .numeric-unit { font-size:18px; color:var(--gray-text); font-weight:700; }
+
+  .feedback-card { border-radius:12px; padding:14px 16px; font-size:13px; line-height:1.6; margin-top:16px; }
+  .feedback-card strong { display:block; margin-bottom:4px; font-size:14px; }
+  .feedback-card.warning { background:#FFF4E5; color:#8A5A00; }
+  .feedback-card.ai { background:#EFE9FF; color:#4A2E8A; display:flex; gap:8px; align-items:center; }
+  .feedback-card.ai strong { margin-bottom:0; }
+  .feedback-card.neutral { background:var(--gray-light); color:var(--dark-text); }
+  .ai-icon { font-size:18px; }
+
+  .text-input { width:100%; border:2px solid var(--gray-light); border-radius:12px; padding:14px 16px; font-size:15px; font-family:inherit; margin-bottom:8px; }
+  .text-input:focus { outline:none; border-color:var(--coral); }
+  .input-icon-wrap { position:relative; margin-bottom:8px; }
+  .input-icon-wrap .icon { position:absolute; left:14px; top:50%; transform:translateY(-50%); font-size:18px; }
+  .input-icon-wrap .text-input { padding-left:42px; margin-bottom:0; }
+
+  .bmi-card { background:var(--gray-light); border-radius:var(--border-radius); padding:18px; margin-bottom:16px; }
+  .bmi-row { display:flex; justify-content:space-between; font-size:13px; color:var(--gray-text); margin-bottom:10px; font-weight:600; }
+  .bmi-badge { font-size:22px; font-weight:800; color:var(--coral-text); margin-bottom:12px; }
+  .bmi-slider { height:8px; border-radius:4px; background:linear-gradient(to right,#4CAF50 0%,#4CAF50 35%,var(--amber) 35%,var(--amber) 65%,#E5533F 65%,#E5533F 100%); position:relative; margin-bottom:8px; }
+  .bmi-marker { position:absolute; top:-4px; width:16px; height:16px; border-radius:50%; background:#fff; border:3px solid var(--dark-text); transform:translateX(-50%); }
+  .bmi-labels { display:flex; justify-content:space-between; font-size:11px; color:var(--gray-text); font-weight:600; }
+  .data-table { width:100%; border-collapse:collapse; margin-bottom:16px; }
+  .data-table td { padding:10px 0; border-bottom:1px solid var(--gray-light); font-size:14px; }
+  .data-table td:first-child { color:var(--gray-text); font-weight:600; }
+  .data-table td:last-child { text-align:right; font-weight:700; }
+
+  .badges-row { display:flex; gap:10px; margin:20px 0; }
+  .badge { flex:1; text-align:center; background:var(--gray-light); border-radius:12px; padding:14px 6px; }
+  .badge .number { font-size:20px; font-weight:800; color:var(--coral-text); }
+  .badge .label { font-size:11px; color:var(--gray-text); font-weight:600; margin-top:4px; line-height:1.3; }
+  .badge .stars { color:var(--amber); font-size:11px; margin-top:4px; }
+  .testimonial-card { background:var(--gray-light); border-radius:14px; padding:16px; margin-top:12px; }
+  .testimonial-stars { color:var(--amber); font-size:14px; margin-bottom:8px; }
+  .testimonial-quote { font-size:13px; line-height:1.6; margin-bottom:8px; font-style:italic; }
+  .testimonial-author-row { display:flex; align-items:center; gap:8px; }
+  .testimonial-avatar { width:32px; height:32px; border-radius:50%; background:var(--coral-light); display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+  .testimonial-name { font-size:12px; font-weight:700; color:var(--gray-text); }
+
+  .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.4); display:flex; align-items:center; justify-content:center; padding:24px; z-index:100; }
+  .modal-card { background:#fff; border-radius:var(--border-radius); padding:24px; width:100%; max-width:360px; }
+  .modal-card h3 { font-size:18px; font-weight:800; margin-bottom:14px; text-align:center; }
+
+  .optin-screen { flex:1; display:flex; flex-direction:column; justify-content:center; padding:40px 24px; }
+  .optin-title { font-size:20px; font-weight:800; text-align:center; margin-bottom:28px; line-height:1.5; }
+
+  .plan-bullets { display:flex; flex-direction:column; gap:10px; margin-top:14px; }
+  .plan-bullet { display:flex; align-items:center; gap:10px; font-size:14px; background:var(--gray-light); border-radius:10px; padding:12px 14px; }
+  .plan-bullet.new { background:var(--coral-light); color:var(--coral-text); font-weight:700; }
+  .plan-bullet .icon { font-size:18px; flex-shrink:0; }
+
+  .challenge-screen { flex:1; display:flex; flex-direction:column; align-items:center; padding:32px 20px; text-align:center; }
+  .challenge-icon { font-size:56px; margin-bottom:12px; }
+  .challenge-title { font-size:22px; font-weight:800; margin-bottom:4px; }
+  .challenge-sub { font-size:16px; font-weight:700; color:var(--coral-text); margin-bottom:12px; }
+  .challenge-desc { font-size:14px; color:var(--gray-text); line-height:1.6; margin-bottom:20px; }
+  .challenge-cards { display:flex; gap:10px; width:100%; margin-bottom:24px; }
+  .challenge-card { flex:1; background:var(--gray-light); border-radius:12px; padding:16px 10px; }
+  .challenge-card .icon { font-size:24px; display:block; margin-bottom:8px; }
+  .challenge-card .title { font-size:13px; font-weight:800; margin-bottom:4px; }
+  .challenge-card .sub { font-size:11px; color:var(--gray-text); }
+
+  .price-summary { background:var(--gray-light); border-radius:12px; padding:14px; margin-bottom:14px; }
+  .price-summary .item { display:flex; justify-content:space-between; font-size:13px; padding:6px 0; }
+  .price-summary .label { color:var(--gray-text); font-weight:600; }
+  .price-summary .value { font-weight:800; }
+  .offer-banner { background:linear-gradient(135deg,var(--coral),var(--amber)); color:#fff; border-radius:12px; padding:12px 14px; font-size:13px; font-weight:700; display:flex; align-items:center; gap:8px; margin-bottom:16px; }
+  .plan-card { border:2px solid var(--gray-light); border-radius:14px; padding:16px 16px 14px; display:flex; align-items:center; gap:12px; margin-bottom:18px; margin-top:22px; cursor:pointer; position:relative; }
+  .plan-card.selected { border-color:var(--coral); background:var(--coral-light); }
+  .plan-card.featured { border-color:var(--coral); }
+  .plan-tag { position:absolute; top:-22px; left:-2px; right:-2px; background:var(--coral); color:#fff; font-size:11px; font-weight:800; padding:5px 0; border-radius:10px 10px 0 0; letter-spacing:0.5px; text-align:center; }
+  .plan-tag.amber { background:var(--amber); }
+  .plan-radio { width:22px; height:22px; border-radius:50%; border:2px solid var(--gray-text); flex-shrink:0; }
+  .plan-radio.checked { border-color:var(--coral); background:var(--coral); box-shadow:inset 0 0 0 4px #fff; }
+  .plan-info { flex:1; }
+  .plan-info .name { font-weight:800; font-size:15px; text-transform:uppercase; }
+  .plan-price-old { font-size:13px; color:var(--gray-text); margin-top:2px; }
+  .plan-price-old > span:first-child { text-decoration:line-through; }
+  .plan-price-new { text-align:right; }
+  .plan-price-new .amount { font-size:26px; font-weight:800; color:var(--coral-text); }
+  .plan-price-new .per-day { display:block; font-size:10px; color:var(--gray-text); font-weight:600; }
+  .guarantee-text { text-align:center; font-size:12px; color:var(--gray-text); font-weight:600; margin:12px 0; }
+  .finalcta-stats-row { display:flex; align-items:center; justify-content:center; gap:14px; margin-bottom:18px; }
+  .stat-pill { display:flex; align-items:center; gap:8px; font-size:15px; font-weight:700; color:var(--dark-text); }
+  .stat-pill .icon { font-size:18px; color:var(--coral-text); }
+  .stat-divider { width:1px; height:22px; background:var(--gray-light); }
+  .discount-banner { background:#FFF6E0; border-radius:var(--border-radius); padding:18px; display:flex; gap:14px; align-items:flex-start; margin-bottom:20px; }
+  .discount-banner .banner-icon { font-size:32px; flex-shrink:0; }
+  .discount-banner p { font-size:15px; line-height:1.5; color:var(--dark-text); font-weight:500; }
+  .discount-banner p strong { color:var(--coral-text); }
+  .plan-subpill { display:inline-block; background:var(--gray-light); color:var(--gray-text); font-size:11px; font-weight:700; padding:3px 10px; border-radius:6px; margin:4px 0 6px; }
+  .plan-price-old strong { color:var(--dark-text); text-decoration:none; }
+  .old-per-day { font-size:13px; color:var(--gray-text); text-decoration:line-through; text-align:right; margin-bottom:2px; }
+  .plan-price-new .amount .decimal { font-size:14px; vertical-align:top; position:relative; top:2px; }
+
+  .mockup-row { display:flex; gap:10px; margin:16px 0; }
+  .mockup-phone { flex:1; aspect-ratio:9/16; background:var(--gray-light); border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; font-size:32px; position:relative; }
+  .mockup-label { font-size:11px; font-weight:700; color:var(--gray-text); }
+  .coach-bubble { background:#EFE9FF; border-radius:14px; padding:14px; display:flex; gap:10px; align-items:flex-start; margin-bottom:16px; }
+  .coach-bubble p { font-size:13px; line-height:1.5; color:#4A2E8A; }
+  .coach-avatar { font-size:20px; flex-shrink:0; }
+
+  #devNav { position:sticky; bottom:0; left:0; right:0; background:#1A1A1A; color:#fff; padding:10px 14px; display:flex; align-items:center; gap:8px; font-size:12px; z-index:200; }
+  #devNav select { flex:1; min-width:0; padding:6px; border-radius:6px; border:none; font-size:12px; }
+  #devNav button { background:#333; color:#fff; border:none; border-radius:6px; padding:6px 10px; cursor:pointer; font-size:12px; }
+  #devCounter { font-size:11px; color:#aaa; white-space:nowrap; }
+</style>
+</head>
+<body>
+<div id="phone-wrap">
+  <div id="app"></div>
+  <div id="devNav">
+    <button id="devPrev">&#8592;</button>
+    <select id="devJump"></select>
+    <button id="devNext">&#8594;</button>
+    <span id="devCounter"></span>
+  </div>
+</div>
+<script>
+// ============================================================
+// SCREENS
+// ============================================================
+const SCREENS = [
+  { type:"hero", block:0 },
+  { type:"gender", block:1, field:"gender", title:"¿Selecciona tu género", subtitle:"Esto nos ayuda a personalizar tu plan según tu metabolismo.", options:[{key:"female",label:"Mujer",emoji:"👩"},{key:"male",label:"Hombre",emoji:"👨"},{key:"other",label:"Otro",emoji:"🧑"}] },
+  { type:"stat", block:1, emoji:"📊", number:"82%", label:"de las personas que ayunan con un plan estructurado reportan mejores resultados que dietas tradicionales." },
+  { type:"multi", block:1, field:"goals", title:"¿Cuáles son tus objetivos de ayuno?", subtitle:"Selecciona todas las que apliquen", skippable:false, options:[{key:"lose_weight",label:"Perder peso",emoji:"⚖️"},{key:"health",label:"Mejorar la salud general",emoji:"❤️"},{key:"energy",label:"Aumentar la energía",emoji:"⚡"},{key:"cognitive",label:"Mejorar las funciones cognitivas",emoji:"🧠"},{key:"sleep",label:"Mejorar el sueño",emoji:"😴"},{key:"longevity",label:"Apoyar la longevidad",emoji:"🌱"}] },
+  { type:"reframe", block:1, emoji:"🎯", title:"Has elegido la herramienta más efectiva", body:"El ayuno hace que perder peso sea simple y sostenible, sin dietas extremas ni entrenamientos excesivos. Quema grasa de forma natural y olvida el efecto rebote. Vamos a encontrar tu plan ideal.", showChart:false },
+  { type:"single", block:1, field:"bodyTypeGoal", title:"¿Qué tipo de cuerpo deseas tener?", options:[{key:"average",label:"Promedio",emoji:"🧍"},{key:"slim",label:"Esbelto",emoji:"🤸"},{key:"athletic",label:"Atlético",emoji:"💪"},{key:"toned",label:"Marcado",emoji:"🏋️"}] },
+  { type:"single", block:1, field:"bodyTypeCurrent", title:"¿Cuál es tu tipo de cuerpo actual?", options:[{key:"overweight",label:"Con sobrepeso",emoji:"🟣"},{key:"slightly_overweight",label:"Ligeramente con sobrepeso",emoji:"🟠"},{key:"medium",label:"De tamaño mediano",emoji:"🟢"},{key:"thin",label:"Delgado",emoji:"🟡"}] },
+  { type:"multi", block:1, field:"targetZones", title:"¿Cuáles son tus zonas objetivo?", skippable:false, options:[{key:"legs_glutes",label:"Piernas + Glúteos",emoji:"🦵"},{key:"chest",label:"Pecho",emoji:"🫶"},{key:"arms_shoulders",label:"Brazos + Hombros",emoji:"💪"},{key:"abs",label:"Abdominales",emoji:"🔥"},{key:"full_body",label:"Cuerpo completo",emoji:"🧘"}] },
+  { type:"single", block:1, field:"lastHappyWeight", title:"¿Cuándo fue la última vez que estuviste contento/a con tu peso?", options:[{key:"less_1y",label:"Hace menos de un año",emoji:"⏳"},{key:"1_2y",label:"Hace 1 a 2 años",emoji:"📅"},{key:"more_2y",label:"Hace más de 2 años",emoji:"📆"},{key:"never",label:"Nunca",emoji:"😔"}] },
+  { type:"reframe", block:2, emoji:"⏱️", title:"Volvamos juntos a ese punto", body:"Has estado allí antes, y puedes llegar otra vez. Con un plan inteligente y las herramientas adecuadas, te ayudaremos a recuperar el ritmo y sentirte bien en tu cuerpo.", showChart:false },
+  { type:"single", block:2, field:"breakfastTime", title:"¿A qué hora desayunas normalmente?", options:[{key:"before7",label:"Antes de las 7:00",emoji:"🌅"},{key:"7to9",label:"Entre las 7:00 y las 9:00",emoji:"🕖"},{key:"after9",label:"Después de las 9:00",emoji:"🕘"},{key:"none",label:"Generalmente no desayuno",emoji:"❌"}] },
+  { type:"single", block:2, field:"lunchTime", title:"¿A qué hora sueles almorzar?", options:[{key:"before13",label:"Antes de las 13:00",emoji:"🕐"},{key:"13to14",label:"Entre las 13:00 y las 14:00",emoji:"🕜"},{key:"14to16",label:"Entre las 14:00 y las 16:00",emoji:"🕞"},{key:"none",label:"Generalmente no almuerzo",emoji:"❌"}] },
+  { type:"single", block:2, field:"dinnerTime", title:"¿A qué hora sueles cenar?", options:[{key:"before17",label:"Antes de las 17:00",emoji:"🕔"},{key:"17to19",label:"Entre las 17:00 y las 19:00",emoji:"🕖"},{key:"after19",label:"Después de las 19:00",emoji:"🕗"},{key:"none",label:"Generalmente no ceno",emoji:"❌"}] },
+  { type:"single", block:2, field:"cookingStyle", title:"¿Prefieres cocinar en casa o comer en restaurantes?", options:[{key:"home",label:"Suelo cocinar en casa",emoji:"🏠"},{key:"out",label:"Suelo comer fuera",emoji:"🔍"},{key:"mixed",label:"Una mezcla de ambas opciones",emoji:"🍱"}] },
+  { type:"reframe", block:2, emoji:"📈", title:"BodyFlow es un método científicamente comprobado para ayudarte a perder peso de manera saludable y sostenible", body:"Obtén resultados duraderos, sin restricciones dietéticas ni efecto rebote.", showChart:true, caption:"" },
+  { type:"single", block:2, field:"energyLevels", title:"¿Cómo son tus niveles de energía durante el día?", options:[{key:"stable",label:"Altos y estables",emoji:"🙌"},{key:"unstable",label:"Inestables / bajos después de las comidas",emoji:"📉"},{key:"low",label:"Bajos durante todo el día",emoji:"😪"}] },
+  { type:"reframe", block:2, emoji:"⚖️", title:"Encuentra tu equilibrio", body:"Los altibajos de energía no tienen que ser tu normalidad. El ayuno estabiliza el azúcar en sangre y el metabolismo, ayudándote a sentirte estable y lleno de vitalidad.", showChart:false },
+  { type:"single", block:2, field:"workSchedule", title:"¿Cómo suele ser tu jornada de trabajo?", options:[{key:"classic8",label:"Jornada laboral clásica de 8 horas",emoji:"💼"},{key:"shifts",label:"Trabajo por turnos",emoji:"🔄"},{key:"flexible",label:"Horario de trabajo flexible",emoji:"📝"},{key:"none",label:"(Ya) no trabajo",emoji:"🏠"}] },
+  { type:"single", block:2, field:"workActivity", title:"¿Qué tan activo eres mientras trabajas?", options:[{key:"sedentary",label:"Soy bastante inactivo",emoji:"💻"},{key:"active",label:"Mi trabajo es físicamente exigente / Soy bastante activo",emoji:"🏃"},{key:"moderate",label:"Algo intermedio",emoji:"🚶"}] },
+  { type:"single", block:2, field:"outOfBreath", title:"¿Te quedas sin aliento después de subir un tramo de escaleras?", options:[{key:"very",label:"Me quedo sin aliento y no puedo hablar",emoji:"😮"},{key:"somewhat",label:"Me quedo algo sin aliento, pero puedo hablar",emoji:"😤"},{key:"fine",label:"Estoy bien después de subir un tramo de escaleras",emoji:"👍"},{key:"great",label:"Puedo subir varios tramos sin problemas",emoji:"🚀"}] },
+  { type:"reframe", block:2, emoji:"👣", title:"Un paso a la vez", body:"Si moverte se siente difícil ahora mismo, no estás solo. Con el ayuno y retos de actividad suaves, construirás hábitos que te devuelvan el placer de moverte.", showChart:false },
+  { type:"single", block:2, field:"walkingTime", title:"¿Cuánto tiempo pasas caminando en un día normal?", options:[{key:"less20",label:"Menos de 20 minutos",emoji:"👆"},{key:"20to60",label:"De 20 a 60 minutos",emoji:"👍"},{key:"more60",label:"Más de 60 minutos",emoji:"🤙"}] },
+  { type:"single", block:2, field:"waterIntake", title:"¿Cuánta agua bebes todos los días?", options:[{key:"none",label:"Nada, solo bebo café, té y otras bebidas",emoji:"🥤"},{key:"2glasses",label:"Aproximadamente 2 vasos (0,5 l)",emoji:"✌️"},{key:"2to6",label:"Entre 2 y 6 vasos (0,5-1,5 l)",emoji:"🤞"},{key:"more6",label:"Mucho, más de 6 vasos",emoji:"🙌"}] },
+  { type:"single", block:2, field:"sleepQuality", title:"En promedio, ¿cuántas horas duermes cada noche?", options:[{key:"less5",label:"Menos de 5 horas",emoji:"😪"},{key:"5to6",label:"De 5 a 6 horas",emoji:"💤"},{key:"7to8",label:"De 7 a 8 horas",emoji:"😌"},{key:"more8",label:"Más de 8 horas",emoji:"🛏️"}] },
+  { type:"multi", block:2, field:"badHabits", title:"Hábitos negativos", subtitle:"Tenemos algunos, ¿cuáles son los tuyos?", skippable:true, options:[{key:"sleep_little",label:"Duermo muy poco",emoji:"🛏️"},{key:"processed_food",label:"Como muchas comidas altamente procesadas",emoji:"🍔"},{key:"sweets",label:"Como mucho chocolate y dulces",emoji:"🍫"},{key:"soda",label:"El refresco es mi mejor amigo",emoji:"🥤"},{key:"no_exercise",label:"Detesto hacer ejercicio",emoji:"🥿"},{key:"smoking",label:"Fumo",emoji:"🚬"}] },
+  { type:"beforeAfter", block:2, title:"BodyFlow te ayuda a desarrollar nuevos hábitos saludables", beforeImg:"https://i.imgur.com/N7D5LYU.png", afterImg:"https://i.imgur.com/7ZprfAg.png", quote:"El ayuno ha transformado mi salud y estado físico. Con BodyFlow, perdí peso, mejoré mi composición corporal y me siento más enfocado y lleno de energía.", name:"Patrick R.", legal:"Los resultados individuales pueden variar según la persona, hábitos y adherencia al plan." },
+  { type:"single", block:2, field:"fastingExperience", title:"¿Qué sabes sobre el ayuno intermitente?", options:[{key:"never",label:"Es completamente nuevo para mí",emoji:"🆕"},{key:"tried",label:"Tengo algo de experiencia y conocimiento",emoji:"📚"},{key:"regular",label:"Tengo mucha experiencia",emoji:"💡"}] },
+  { type:"reframe", block:2, emoji:"⏰", title:"Da el siguiente paso", body:"Ya tienes algo de experiencia con el ayuno, ¡genial! Ahora vamos a perfeccionar tu rutina para lograr resultados óptimos. ¿Listo? ¡Vamos a por ello!", showChart:false },
+  { type:"single", block:2, field:"motivation", title:"¿Qué ganas tienes de perder algo de peso?", options:[{key:"curious",label:"Solo quiero ver a qué tanto revuelo con el ayuno",emoji:"🧐"},{key:"try",label:"Quiero probar y perder algo de peso",emoji:"🙌"},{key:"serious",label:"Me tomo en serio alcanzar mi objetivo de pérdida de peso",emoji:"🚀"}] },
+  { type:"numeric", block:2, field:"height", title:"¿Cuánto mides?", units:["cm","ft"], defaultUnit:"cm", defaultValue:0, min:0, max:250, step:1 },
+  { type:"numeric", block:2, field:"weight", title:"¿Cuál es tu peso actual?", units:["kg","lb"], defaultUnit:"kg", defaultValue:0, min:0, max:300, step:1, feedback:{dynamic:"bmi",type:"neutral",icon:"📊",titleTemplate:"Tu IMC actual es {bmi} ({bmiCategory})",text:"Usaremos este dato para calcular tu plan personalizado."} },
+  { type:"numeric", block:2, field:"targetWeight", title:"¿Cuál consideras que es tu peso ideal?", units:["kg","lb"], defaultUnit:"kg", defaultValue:0, min:0, max:300, step:1, feedback:{type:"ai",icon:"✨",title:"Objetivo realista: pierdes entre el 11 y el 15% de tu peso",text:"Apuntar a este objetivo puede ayudar a aliviar el dolor en las articulaciones, aumentar la movilidad y mejorar la función física general."} },
+  { type:"numeric", block:2, field:"age", title:"¿Cuál es tu edad?", units:null, defaultValue:0, min:14, max:100, step:1, feedback:{type:"neutral",icon:"🎂",title:"Pedimos tu edad para crear tu plan de ayuno",text:"Las personas mayores tienden a tener más grasa corporal que las personas más jóvenes con el mismo IMC."} },
+  { type:"bmiSummary", block:3, title:"Aquí está el resumen de tus datos" },
+  { type:"reframe", block:3, emoji:"🌟", title:"Estás listo para un cambio", body:"Mereces sentirte sano y seguro. Con tu Coach de ayuno personal, crearás una rutina efectiva que te llevará a tus metas paso a paso.", showChart:false },
+  { type:"single", block:3, field:"specialOccasion", title:"¿Tienes alguna ocasión especial para la que quieras perder peso?", options:[{key:"vacation",label:"Vacaciones",emoji:"🏖️"},{key:"wedding",label:"Boda",emoji:"💍"},{key:"sports_event",label:"Evento deportivo",emoji:"🏀"},{key:"summer",label:"Verano",emoji:"☀️"},{key:"reunion",label:"Reunión",emoji:"👯"},{key:"family",label:"Evento familiar",emoji:"👪"},{key:"other",label:"Otra",emoji:"📅"},{key:"myself",label:"No, lo hago solo por mí",emoji:"💖"}] },
+  { type:"date", block:3, field:"occasionDate", title:"¿Cuándo es tu ocasión especial?", body:"Una vez que lo sepamos, podremos crear un plan personalizado para ayudarte a ponerte en forma. Tus datos no se compartirán con terceros.", skippable:true, minToday:true },
+  { type:"projection", block:3, title:"El último programa que necesitarás para alcanzar tus objetivos de salud y pérdida de peso", intro:"¡Buenas noticias! Basándonos en tus datos, calculamos que alcanzarás tu peso objetivo de", legal:"Este pronóstico se basa en los datos de millones de BodyFlowers. Los resultados pueden variar con tus datos.", closing:"¡Luce y siéntete increíble en este día tan especial!" },
+  { type:"analyzing", block:3, title:"Analizando tus respuestas...", bars:[{label:"Analizando parámetros corporales",pct:100},{label:"Comidas y actividad",pct:100},{label:"Salud y seguridad",pct:70},{label:"Generando tu plan de ayuno",pct:30}], badges:[{number:"10M+",label:"Usuarios"},{number:"4.8",label:"Calificación",stars:true},{number:"92%",label:"Tasa de éxito"}], testimonial:{quote:"El ayuno es un cambio de juego. Con BodyFlow, finalmente encontré un enfoque sostenible para la pérdida de peso que me hace sentir saludable y feliz.",name:"Camila O.",avatar:"👩"} },
+  { type:"microModal", block:3, title:"Analizando tus respuestas...", bars:[{label:"Analizando parámetros corporales",pct:100},{label:"Comidas y actividad",pct:100},{label:"Salud y seguridad",pct:100},{label:"Generando tu plan de ayuno",pct:100}], testimonial:{quote:"El ayuno me liberó de los antojos y transformó mi relación con la comida. Es un estilo de vida natural y sin esfuerzo que amo y quiero continuar.",name:"Lucía V.",avatar:"👩‍🦰"}, modal:{title:"¿Eres una persona madrugadora o nocturna?",field:"chronotype",options:[{key:"early",label:"Me levanto temprano"},{key:"late",label:"Me gusta quedarme despierto hasta tarde"},{key:"both",label:"Soy un poco de ambos"}]} },
+  { type:"email", block:4, title:"Ingresa tu dirección de correo electrónico", placeholder:"tu@email.com", legal:"Mantenemos tu información confidencial. Para obtener más información sobre nuestra forma de manejar los datos, consulta nuestra Política de privacidad." },
+  { type:"optin", block:4, title:"¿Quieres suscribirte a nuestro boletín para recibir consejos exclusivos sobre el ayuno, ofertas y noticias de actualización?", legal:"Puedes oponerte al uso de tu dirección de correo electrónico en cualquier momento sin incurrir en costos distintos a los costos de transmisión según tu tarifa básica. No hay costos por tu suscripción al boletín." },
+  { type:"planReady", block:4, basedOn:"Basado en los datos de millones de usuarios de BodyFlow. El progreso puede variar.", title:"Tu plan personal de ayuno está listo", bullets:[{icon:"🍽️",text:"Plan de ayuno semanal personalizado"},{icon:"🎯",text:"Un programa basado en la ciencia, perfectamente adaptado a tus objetivos"},{icon:"📊",text:"Se adapta a tu progreso"},{icon:"❤️",text:"Coachings diarios, desafíos semanales y más de 100 recetas"},{icon:"📅",text:"Resultados en 21 días y cambio duradero"},{icon:"🤖",text:"Flow IA disponible 24/7 para guiarte en cada paso",isNew:true}] },
+  { type:"challenge", block:4, title:"Desafío de bienvenida", challengeName:"Reto de 7 días: Ayuno 16:8", body:"Completa este reto junto a miles de personas y desbloquea tu primera insignia en la app.", cta:"Unirme al reto", cards:[{icon:"🔥",title:"7 días",sub:"Duración del reto"},{icon:"👥",title:"+50,000",sub:"Participantes activos"},{icon:"🏆",title:"Insignia",sub:"Premio al completar"}] },
+  { type:"motivation", block:4, title:"Cada gran cambio comienza con una decisión", emoji:"🌟", body:"Has llegado hasta aquí porque quieres algo diferente para ti. Tu plan ya está diseñado, tus metas están claras y miles de personas ya recorrieron este mismo camino antes que tú.", quote:"El éxito no es definitivo, el fracaso no es fatal. Lo que cuenta es el coraje para continuar.", quoteAuthor:"Winston Churchill", points:[{icon:"🎯",text:"Tu meta ya está definida, solo falta dar el primer paso"},{icon:"⏳",text:"Pequeños cambios diarios generan grandes resultados"},{icon:"💪",text:"Flow IA te acompaña en cada paso con soporte inteligente 24/7"}], cta:"Continuar" },
+  { type:"mockups", block:4, title:"Flow IA está listo para ayudarte", body:"Flow IA es tu asistente inteligente disponible 24/7. Te responde al instante, te guía paso a paso en la configuración de tu plan y te brinda soporte amigable y profesional para que aproveches al máximo BodyFlow.", billingLegal:"Al continuar, aceptas que tu suscripción se renovará automáticamente según el plan seleccionado.", coachExample:"¡Hola! Soy Flow IA 👋 Vi que completaste tu ayuno de hoy 🎉 Mañana ajustaremos tu ventana a 17:7 según tu progreso. ¿Tienes alguna duda?", mockups:[{icon:"📱",label:"Seguimiento diario"},{icon:"🤖",label:"Flow IA 24/7"},{icon:"📈",label:"Reportes semanales"}] },
+  { type:"trustBadges", block:4, title:"Te acompañamos en cada paso", badges:[{number:"50M+",label:"Descargas"},{number:"4.8",label:"Calificación",stars:true},{number:"No.1",label:"En salud y forma física"}], checklist:["Plan de ayuno personalizado","Flow IA disponible 24/7 para responder tus dudas","Guía paso a paso en la configuración de tu plan","Recomendaciones nutricionales","Soporte y comunidad"], closing:"Miles de personas ya transformaron sus hábitos con BodyFlow." },
+  { type:"testimonials", block:4, title:"Lo que dicen nuestros usuarios", testimonials:[{quote:"¡Esta app es un cambio de juego! Hace mi proceso de pérdida de peso mucho más fácil y placentero. Ya estoy en mi segunda semana y he perdido increíbles 2,5 kg en la primera semana.",name:"Martín Mendoza",avatar:"👨"},{quote:"El ayuno ha transformado por completo mi relación con la comida. Con el Coach de BodyFlow finalmente logré dejar atrás los antojos y los patrones de alimentación poco saludables.",name:"Valeria Castillo",avatar:"👩"},{quote:"BodyFlow ha transformado completamente mi vida, y no puedo imaginar volver a mis viejos hábitos. El ayuno no es solo una dieta; es un estilo de vida que me capacita para vivir mi mejor vida.",name:"Andrés Aguilar",avatar:"👨"}] },
+  { type:"finalCta", block:4, defaultPlan:"monthly", banner:{icon:"🎁",html:"Celebramos <strong>50M</strong> de descargas.<br/>Disfruta de un <strong>50%</strong> de descuento<br/>como agradecimiento."}, plans:[{key:"weekly",name:"PRUEBA DE 7 DÍAS",sub:"PLAN DE 1 MES",oldTotalPrice:"2,28 US$",oldTotal:"15,98 US$",newTotal:"7,99 US$",newPriceWhole:"1",newPriceDecimal:"14",checkoutUrl:"https://pay.hotmart.com/W106352146L?off=g7okxnse"},{key:"monthly",name:"PLAN DE 1 MES",tag:"POPULAR",oldTotalPrice:"1,12 US$",oldTotal:"33,98 US$",newTotal:"16,99 US$",newPriceWhole:"0",newPriceDecimal:"56",featured:true,checkoutUrl:"https://pay.hotmart.com/W106352146L?off=11h50m8y"},{key:"quarterly",name:"PLAN DE 3 MESES",tag:"MEJOR PRECIO",oldTotalPrice:"0,66 US$",oldTotal:"59,98 US$",newTotal:"29,99 US$",newPriceWhole:"0",newPriceDecimal:"33",checkoutUrl:"https://pay.hotmart.com/W106352146L?off=c266sm9y"}], guarantee:"Garantía de devolución de dinero de 30 días", cta:"Obtener mi plan", billingLegal:"Tu suscripción se renovará automáticamente al finalizar el periodo elegido. Puedes cancelar en cualquier momento.", guaranteeSeal:"Garantía de satisfacción 100%", guaranteeBody:"Si no estás satisfecho/a con BodyFlow en los primeros 30 días, te devolvemos tu dinero. Sin complicaciones." }
+];
+
+// ============================================================
+// STATE
+// ============================================================
+let currentIndex=0, answers={}, unitState={}, numericValues={}, selectedPlan="monthly";
+const app=document.getElementById("app");
+
+async function loadProfile(){try{if(!window.storage)return;const r=await window.storage.get("bodyflow_profile");if(r&&r.value){const p=JSON.parse(r.value);answers=p.answers||{};numericValues=p.numericValues||{};unitState=p.unitState||{};currentIndex=p.currentIndex||0;}}catch(e){}}
+async function saveProfile(){try{if(!window.storage)return;await window.storage.set("bodyflow_profile",JSON.stringify({answers,numericValues,unitState,currentIndex,updatedAt:new Date().toISOString()}));}catch(e){}}
+
+function getHeightCm(){const h=numericValues.height??0;return unitState.height==="ft"?Math.round(h*30.48):h;}
+function getWeightKg(f){const w=numericValues[f]??0;return unitState[f]==="lb"?Math.round(w*0.4536):w;}
+function calcBMI(){const h=getHeightCm()/100,w=getWeightKg("weight");if(!h||!w)return 0;return Math.round((w/(h*h))*10)/10;}
+function bmiCategory(b){if(!b)return"sin datos";if(b<18.5)return"bajo peso";if(b<25)return"normal";if(b<30)return"sobrepeso";return"obesidad";}
+function bmiSliderPct(b){if(!b)return 0;if(b<=25)return Math.max(0,((b-15)/(25-15))*35);if(b<=30)return 35+((b-25)/(30-25))*30;return Math.min(100,65+((b-30)/(40-30))*35);}
+
+function currentBlockIndex(s){return(s.block>=1&&s.block<=4)?s.block:0;}
+function goNext(){if(currentIndex<SCREENS.length-1){currentIndex++;saveProfile();render();window.scrollTo(0,0);}else{completeOnboarding();}}
+function goPrev(){if(currentIndex>0){currentIndex--;saveProfile();render();window.scrollTo(0,0);}}
+function goTo(i){currentIndex=Math.max(0,Math.min(SCREENS.length,i));saveProfile();render();window.scrollTo(0,0);}
+function setAnswer(f,v){answers[f]=v;saveProfile();}
+function toggleMultiAnswer(f,k){if(!Array.isArray(answers[f]))answers[f]=[];const i=answers[f].indexOf(k);if(i>=0)answers[f].splice(i,1);else answers[f].push(k);saveProfile();}
+function selectSingle(f,k){setAnswer(f,k);}
+function selectPlan(k){selectedPlan=k;trackPlanSelect(k);render();}
+
+function renderTopbar(s){
+  if(s.type==="hero")return"";
+  const b=currentBlockIndex(s);
+  let dots="";
+  for(let i=1;i<=4;i++){const filled=i<=b,cur=i===b;dots+=`<div class="progress-bar" style="flex:1;${i>1?"margin-left:4px;":""}"><div class="progress-fill" style="width:${filled?"100%":"0%"};${cur?"background:var(--coral)":""}"></div></div>`;}
+  return`<div class="topbar"><button class="back-btn" onclick="goPrev()" ${currentIndex===0?"disabled":""}>&#8592;</button><div class="logo"><div class="logo-mark"></div> BodyFlow</div><div class="progress-track">${dots}</div></div>`;
+}
+function iconSpan(e){return`<span class="opt-icon">${e}</span>`;}
+
+// ============================================================
+// HERO con animación
+// ============================================================
+function renderHero(){
+  return`
+    <div class="hero-screen" style="justify-content:space-between;">
+      <div class="hero-topbar">
+        <div class="logo-mark"></div>
+        <span class="logo-text">BodyFlow</span>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:32px 28px 16px;">
+        <div id="h-icon" style="font-size:60px;text-align:center;margin-bottom:20px;transition:opacity 0.3s;">🎯</div>
+        <div id="h-msg" style="font-size:20px;font-weight:800;text-align:center;line-height:1.4;margin-bottom:8px;min-height:64px;color:var(--dark-text);transition:opacity 0.3s;">
+          Preparando tu experiencia...
+        </div>
+        <div id="h-sub" style="font-size:13px;color:var(--gray-text);text-align:center;margin-bottom:28px;min-height:44px;line-height:1.6;transition:opacity 0.3s;">
+          Millones de personas ya transformaron sus hábitos con BodyFlow
+        </div>
+        <div style="background:var(--gray-light);border-radius:20px;height:14px;overflow:visible;margin-bottom:10px;position:relative;">
+          <div id="h-bar" style="height:100%;width:0%;background:linear-gradient(90deg,var(--coral),var(--amber));border-radius:20px;position:relative;transition:width 0.8s cubic-bezier(0.4,0,0.2,1);">
+            <div id="h-dot" style="position:absolute;right:-8px;top:-4px;width:22px;height:22px;border-radius:50%;background:#fff;border:3px solid var(--coral);box-shadow:0 2px 8px rgba(255,107,74,0.4);"></div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray-text);font-weight:600;margin-bottom:20px;">
+          <span>Tu plan personalizado</span>
+          <span id="h-pct" style="color:var(--coral-text);font-weight:800;">0%</span>
+        </div>
+        <div id="h-chips" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;min-height:36px;"></div>
+      </div>
+      <div style="text-align:center;padding:0 28px 16px;">
+        <div style="font-size:11px;color:var(--gray-text);font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:4px;">Comunidad activa</div>
+        <div style="font-size:26px;font-weight:900;color:var(--coral-text);">239,000,000</div>
+        <div style="font-size:12px;color:var(--gray-text);">horas de ayuno rastreadas</div>
+      </div>
+    </div>
+    <div class="footer-cta" style="padding-top:0;">
+      <button class="btn-primary" id="h-btn" onclick="goNext()" disabled>
+        Personalizando tu plan...
+      </button>
+    </div>`;
+}
+
+function initHeroAnimation(){
+  const steps=[
+    {pct:8,  msg:"Preparando tu experiencia...",                        sub:"Cargando los mejores resultados del ayuno intermitente",                              icon:"⚡", chips:[]},
+    {pct:22, msg:"Analizando 10 millones de perfiles similares...",     sub:"Identificando patrones de éxito para personas como tú",                              icon:"🔍", chips:["Metabolismo","Edad"]},
+    {pct:38, msg:"Calculando tu ventana de ayuno ideal...",             sub:"Cada cuerpo es diferente — el tuyo merece un plan único",                            icon:"⏱️", chips:["Metabolismo","Edad","Horarios"]},
+    {pct:52, msg:"Seleccionando tu protocolo personalizado...",         sub:"Combinando ciencia y datos reales para maximizar tus resultados",                    icon:"🧬", chips:["Metabolismo","Edad","Horarios","Estilo de vida"]},
+    {pct:63, msg:"¡Tu plan base está casi listo!",                      sub:"Solo necesitamos tus datos para terminar de ajustarlo todo a ti 👇",                 icon:"🎯", chips:["Metabolismo","Edad","Horarios","Estilo de vida","Tus metas"]}
+  ];
+  const chipBg=["#FFE3D4","#EFE9FF","#E8F5E9","#FFF4E5","#E3F2FD"];
+  const chipFg=["#E5532F","#4A2E8A","#2E7D32","#8A5A00","#1565C0"];
+  const delays=[950,1100,1200,1300,1600];
+  let i=0;
+
+  function step(){
+    const bar=document.getElementById("h-bar");
+    if(!bar)return;
+    if(i>=steps.length){
+      const btn=document.getElementById("h-btn");
+      if(btn){btn.disabled=false;btn.textContent="¡Comenzar mi plan ahora! →";btn.style.transform="scale(1.03)";setTimeout(()=>btn.style.transform="scale(1)",300);}
+      return;
+    }
+    const st=steps[i];
+    bar.style.width=st.pct+"%";
+    const pctEl=document.getElementById("h-pct");
+    if(pctEl)pctEl.textContent=st.pct+"%";
+    ["h-msg","h-sub","h-icon"].forEach(id=>{
+      const el=document.getElementById(id);
+      if(el){el.style.opacity="0";setTimeout(()=>{if(id==="h-msg")el.textContent=st.msg;else if(id==="h-sub")el.textContent=st.sub;else el.textContent=st.icon;el.style.opacity="1";},250);}
+    });
+    const chips=document.getElementById("h-chips");
+    if(chips)chips.innerHTML=st.chips.map((c,j)=>`<span style="background:${chipBg[j%5]};color:${chipFg[j%5]};padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700;">${c}</span>`).join("");
+    i++;
+    setTimeout(step,delays[i-1]||1200);
+  }
+  setTimeout(step,400);
+}
+
+// ============================================================
+// RENDERERS
+// ============================================================
+function renderGender(s){
+  const sel=answers[s.field];
+  const cards=s.options.map(o=>`<div class="gender-card ${sel===o.key?'selected':''}" onclick="selectSingle('${s.field}','${o.key}');render()"><div class="gender-avatar">${o.emoji}</div><div class="gender-label">${o.label}</div></div>`).join("");
+  return`<div class="content"><h1 class="q-title">${s.title}</h1><p class="q-subtitle">${s.subtitle}</p><div class="gender-row">${cards}</div><p class="legal-text">Al continuar, confirmas que has leído, entendido y aceptado nuestros <a href="#">Términos de Uso</a> y <a href="#">Política de Privacidad</a>.</p></div><div class="footer-cta"><button class="btn-primary" onclick="goNext()" ${!sel?"disabled":""}>Continuar</button></div>`;
+}
+function renderStat(s){return`<div class="stat-screen"><div class="stat-image">${s.emoji}</div><div class="stat-number">${s.number}</div><div class="stat-label">${s.label}</div></div><div class="footer-cta"><button class="btn-primary" onclick="goNext()">Continuar</button></div>`;}
+function renderMulti(s){
+  const sel=Array.isArray(answers[s.field])?answers[s.field]:[];
+  const opts=s.options.map(o=>`<div class="option ${sel.includes(o.key)?'selected':''}" onclick="toggleMultiAnswer('${s.field}','${o.key}');render()"><span>${o.label}</span>${iconSpan(o.emoji)}</div>`).join("");
+  return`<div class="content"><h1 class="q-title">${s.title}</h1>${s.subtitle?`<p class="q-subtitle">${s.subtitle}</p>`:""}<div class="options">${opts}</div>${s.skippable?`<div class="skip-link" onclick="goNext()">Omitir esta pregunta</div>`:""}</div><div class="footer-cta"><button class="btn-primary" onclick="goNext()" ${sel.length===0&&!s.skippable?"disabled":""}>Continuar</button></div>`;
+}
+function renderSingle(s){
+  const sel=answers[s.field];
+  const opts=s.options.map(o=>`<div class="option ${sel===o.key?'selected':''}" onclick="selectSingle('${s.field}','${o.key}');goNext()"><span>${o.label}</span>${iconSpan(o.emoji||"")}</div>`).join("");
+  return`<div class="content no-pad-bottom"><h1 class="q-title">${s.title}</h1>${s.subtitle?`<p class="q-subtitle">${s.subtitle}</p>`:""}<div class="options">${opts}</div></div>`;
+}
+function renderReframe(s){
+  let chart="";
+  if(s.showChart)chart=`<div class="chart-card" style="margin-top:14px;"><div class="chart-svg-wrap"><svg viewBox="0 0 300 110" width="100%" height="100%" preserveAspectRatio="none"><polyline points="10,20 80,30 150,75 220,95 290,15" fill="none" stroke="#F0997B" stroke-width="2.5"/><polyline points="10,20 80,40 150,70 220,80 290,75" fill="none" stroke="#FF6B4A" stroke-width="2.5"/><text x="10" y="14" font-size="10" fill="#F0997B" font-weight="600">Dieta estricta</text><text x="220" y="70" font-size="10" fill="#FF6B4A" font-weight="600">BodyFlow</text></svg></div></div>`;
+  return`<div class="content no-pad-bottom" style="padding-top:0;"><div class="reframe-image">${s.emoji}</div><div class="reframe-card"><h2>${s.title}</h2><p>${s.body}</p>${chart}${s.caption?`<p style="font-weight:600;color:#4A1B0C;margin-top:14px;">${s.caption}</p>`:""}<button class="btn-primary" onclick="goNext()" style="margin-top:14px;">Continuar</button></div></div>`;
+}
+function renderNumeric(s){
+  const f=s.field;
+  if(numericValues[f]===undefined)numericValues[f]=s.defaultValue??0;
+  if(s.units&&!unitState[f])unitState[f]=s.defaultUnit;
+  const val=numericValues[f],unit=s.units?unitState[f]:null;
+  let ut="";
+  if(s.units)ut=`<div class="unit-toggle">${s.units.map(u=>`<button class="unit-btn ${unit===u?'active':''}" onclick="setUnit('${f}','${u}')">${u}</button>`).join("")}</div>`;
+  let fb="";
+  if(s.feedback){
+    let title=s.feedback.title;
+    if(s.feedback.dynamic==="bmi"){const bmi=calcBMI();title=s.feedback.titleTemplate.replace("{bmi}",bmi||"--").replace("{bmiCategory}",bmiCategory(bmi));}
+    fb=`<div class="feedback-card ${s.feedback.type}"><strong>${s.feedback.icon} ${title}</strong>${s.feedback.text}</div>`;
+  }
+  let ftCaption="";
+  if(f==="height"&&unit==="ft"&&val>0){
+    let feet=Math.floor(val),inches=Math.round((val-feet)*12);
+    if(inches===12){feet+=1;inches=0;}
+    ftCaption=`<div style="text-align:center;font-size:13px;color:var(--gray-text);margin-top:6px;">≈ ${feet}' ${inches}"</div>`;
+  }
+  return`<div class="content"><h1 class="q-title">${s.title}</h1>${ut}<div class="numeric-display"><div class="numeric-value-row"><div class="numeric-stepper"><button class="step-btn" onclick="stepNumeric('${f}',1)">+</button><button class="step-btn" onclick="stepNumeric('${f}',-1)">-</button></div><input type="number" class="numeric-value" id="numericInput-${f}" value="${val}" min="${s.min??0}" max="${s.max??999}" step="${s.step||1}" oninput="setNumericValue('${f}',this.value)" onblur="commitNumericValue('${f}',this.value)" onfocus="this.select()"/>${unit?`<div class="numeric-unit">${unit}</div>`:""}</div></div>${ftCaption}${fb}</div><div class="footer-cta"><button class="btn-primary" onclick="setAnswer('${f}',numericValues['${f}']);goNext()" ${val===0?"disabled":""}>Continuar</button></div>`;
+}
+function renderDate(s){
+  const val=answers[s.field]||"";
+  const today=new Date().toISOString().split("T")[0];
+  const attr=s.minToday?`min="${today}"`:(`max="${today}"`);
+  return`<div class="content"><h1 class="q-title">${s.title}</h1><p class="q-subtitle">${s.body}</p><input type="date" class="text-input" value="${val}" ${attr} onchange="setAnswer('${s.field}',this.value);refreshFooter()" id="dateInput"/>${s.skippable?`<div class="skip-link" onclick="goNext()">Omitir</div>`:""}</div><div class="footer-cta"><button class="btn-primary" id="dateContinue" onclick="goNext()" ${!val&&!s.skippable?"disabled":""}>Continuar</button></div>`;
+}
+function renderBmiSummary(s){
+  const bmi=calcBMI(),cat=bmiCategory(bmi);
+  const catLabel={"sin datos":"Sin datos","bajo peso":"Bajo peso","normal":"Normal","sobrepeso":"Sobrepeso","obesidad":"Obesidad"}[cat];
+  const pct=bmiSliderPct(bmi);
+  const lifestyle=answers.workActivity==="active"?"Activo":answers.workActivity==="sedentary"?"Sedentario":"Moderado";
+  const eat=answers.cookingStyle==="out"?"Comida fuera":answers.cookingStyle==="home"?"Cocina en casa":"Mixto";
+  const mot={curious:"Curiosidad",try:"Moderada",serious:"Alta"}[answers.motivation]||"Moderada";
+  return`<div class="content"><h1 class="q-title">${s.title}</h1><div class="bmi-card"><div class="bmi-row"><span>Índice de masa corporal</span><span>Normal: 21.5</span></div><div class="bmi-badge">Tu IMC: ${bmi||"--"}</div><div class="bmi-slider"><div class="bmi-marker" style="left:${pct}%"></div></div><div class="bmi-labels"><span>Normal</span><span>Sobrepeso</span><span>Obesidad</span></div></div><table class="data-table"><tr><td>Estilo de vida</td><td>${lifestyle}</td></tr><tr><td>Forma de comer</td><td>${eat}</td></tr><tr><td>Motivación para el ayuno</td><td>${mot}</td></tr><tr><td>Categoría de IMC</td><td>${catLabel}</td></tr></table><div class="feedback-card warning"><strong>Riesgos de un IMC fuera de rango</strong>Presión alta, enfermedades cardíacas, diabetes tipo 2 y mayor mortalidad general.</div><div class="feedback-card ai" style="margin-top:10px;"><span class="ai-icon">✨</span><strong style="display:inline;">Flow IA usará estos datos para ajustar tu plan cada semana</strong></div></div><div class="footer-cta"><button class="btn-primary" onclick="goNext()">Continuar</button></div>`;
+}
+function renderProjection(s){
+  const startW=getWeightKg("weight")||0,targetW=getWeightKg("targetWeight")||0;
+  const unit=unitState.weight==="lb"?"lb":"kg";
+  const dS=unitState.weight==="lb"?Math.round(startW/0.4536):startW;
+  const dT=unitState.weight==="lb"?Math.round(targetW/0.4536):targetW;
+  const occ={vacation:"vacaciones",wedding:"boda",sports_event:"evento deportivo",summer:"verano",reunion:"reunión",family:"evento familiar",other:"ocasión especial",myself:"ti mismo/a"}[answers.specialOccasion]||"tu meta";
+  let target;
+  if(answers.occasionDate){target=new Date(answers.occasionDate+"T00:00:00");}else{target=new Date();target.setDate(target.getDate()+70);}
+  const ds=target.toLocaleDateString("es-ES",{month:"long",day:"numeric",year:"numeric"});
+  return`<div class="content"><h1 class="q-title">${s.title}</h1><p class="q-subtitle">${s.intro}</p><div style="text-align:center;font-size:22px;font-weight:800;color:var(--coral-text);margin:8px 0 16px;">${dT} ${unit} para el ${ds}</div><div class="chart-card"><div class="chart-svg-wrap"><svg viewBox="0 0 300 110" width="100%" height="100%" preserveAspectRatio="none"><polyline points="10,15 80,40 150,75 220,90 290,92" fill="none" stroke="#FF6B4A" stroke-width="2.5"/><polyline points="10,15 80,40 150,75 220,90 290,92 290,105 10,105" fill="#FFE3D4" stroke="none" opacity="0.5"/><circle cx="10" cy="15" r="4" fill="#FF6B4A"/><text x="10" y="8" font-size="10" fill="#4A1B0C" font-weight="700">${dS} ${unit}</text><circle cx="290" cy="92" r="4" fill="#FF6B4A"/><text x="225" y="86" font-size="10" fill="#4A1B0C" font-weight="700">Meta 🏆</text></svg></div></div><p class="legal-text">${s.legal}</p><p style="text-align:center;font-weight:600;color:#4A1B0C;margin-top:14px;">¡Listo a tiempo para ${occ}!</p></div><div class="footer-cta"><button class="btn-primary" onclick="goNext()">Continuar</button></div>`;
+}
+function renderProgressBars(bars){return bars.map(b=>`<div style="margin-bottom:12px;"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span>${b.label}</span><span>${b.pct}%</span></div><div style="height:6px;border-radius:3px;background:var(--gray-light);overflow:hidden;"><div style="width:${b.pct}%;height:100%;background:var(--coral);"></div></div></div>`).join("");}
+function renderAnalyzing(s){
+  const badges=s.badges.map(b=>`<div class="badge"><div class="number">${b.number}</div><div class="label">${b.label}</div>${b.stars?`<div class="stars">★★★★★</div>`:""}</div>`).join("");
+  return`<div class="content no-pad-bottom"><h1 class="q-title" style="text-align:center;">${s.title}</h1>${renderProgressBars(s.bars)}<div class="badges-row">${badges}</div><div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><p class="testimonial-quote">${s.testimonial.quote}</p><div class="testimonial-author-row"><div class="testimonial-avatar">${s.testimonial.avatar||"👤"}</div><p class="testimonial-name">${s.testimonial.name}</p></div></div></div><div class="footer-cta"><button class="btn-primary" onclick="goNext()">Continuar</button></div>`;
+}
+function renderMicroModal(s){
+  const sel=answers[s.modal.field];
+  const opts=s.modal.options.map(o=>`<div class="option ${sel===o.key?'selected':''}" onclick="selectSingle('${s.modal.field}','${o.key}');render()" style="padding:12px 14px;"><span>${o.label}</span></div>`).join("");
+  return`<div class="content no-pad-bottom" style="position:relative;opacity:0.5;pointer-events:none;"><h1 class="q-title" style="text-align:center;">${s.title}</h1>${renderProgressBars(s.bars)}<div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><p class="testimonial-quote">${s.testimonial.quote}</p><p class="testimonial-name">${s.testimonial.name}</p></div></div><div class="modal-overlay"><div class="modal-card"><h3>Una última pregunta...</h3><div class="options">${opts}</div>${sel?`<button class="btn-primary" style="margin-top:14px;" onclick="goNext()">Continuar</button>`:""}</div></div>`;
+}
+function renderEmail(s){
+  const val=answers.email||"",ok=/\S+@\S+\.\S+/.test(val);
+  return`<div class="content"><h1 class="q-title">${s.title}</h1><div class="input-icon-wrap"><span class="icon">✉️</span><input type="email" class="text-input" placeholder="${s.placeholder}" value="${val}" oninput="setAnswer('email',this.value);refreshFooter()" id="emailInput"/></div><p class="legal-text">🔒 ${s.legal}</p></div><div class="footer-cta"><button class="btn-primary" id="emailContinue" onclick="goNext()" ${!ok?"disabled":""}>Continuar</button></div>`;
+}
+function renderOptin(s){return`<div class="optin-screen"><div class="logo" style="justify-content:center;margin-bottom:24px;"><div class="logo-mark"></div> BodyFlow</div><div class="optin-title">${s.title}</div><button class="btn-primary" style="margin-bottom:10px;" onclick="setAnswer('newsletter',true);goNext()">¡Claro, inscríbeme!</button><button class="btn-secondary" onclick="setAnswer('newsletter',false);goNext()">No, gracias</button><p class="legal-text" style="margin-top:24px;">${s.legal}</p></div>`;}
+function renderPlanReady(s){
+  const sw=getWeightKg("weight")||0;
+  const bullets=s.bullets.map(b=>`<div class="plan-bullet ${b.isNew?'new':''}"><span class="icon">${b.icon}</span><span>${b.text}</span></div>`).join("");
+  return`<div class="content"><div class="chart-card"><div class="chart-svg-wrap"><svg viewBox="0 0 300 110" width="100%" height="100%" preserveAspectRatio="none"><polyline points="10,15 80,40 150,75 220,90 290,92" fill="none" stroke="#FF6B4A" stroke-width="2.5"/><circle cx="10" cy="15" r="4" fill="#FF6B4A"/><text x="10" y="8" font-size="10" fill="#4A1B0C" font-weight="700">${sw} kg</text><circle cx="290" cy="92" r="4" fill="#FF6B4A"/><text x="225" y="86" font-size="10" fill="#4A1B0C" font-weight="700">Meta 🏆</text></svg></div></div><p class="legal-text" style="text-align:center;">${s.basedOn}</p><h1 class="q-title" style="margin-top:14px;text-align:center;">${s.title}</h1><div class="plan-bullets">${bullets}</div></div><div class="footer-cta"><button class="btn-primary" onclick="goNext()">Continuar</button></div>`;
+}
+function renderChallenge(s){
+  const cards=s.cards.map(c=>`<div class="challenge-card"><span class="icon">${c.icon}</span><div class="title">${c.title}</div><div class="sub">${c.sub}</div></div>`).join("");
+  return`<div class="challenge-screen"><div class="challenge-icon">🔥</div><div class="challenge-title">${s.title}</div><div class="challenge-sub">${s.challengeName}</div><p class="challenge-desc">${s.body}</p><div class="challenge-cards">${cards}</div><button class="btn-primary" onclick="goNext()">${s.cta}</button><p style="font-size:11px;color:var(--gray-text);margin-top:10px;">NUEVO - exclusivo de BodyFlow</p></div>`;
+}
+function renderMotivation(s){
+  const pts=s.points.map(p=>`<div class="plan-bullet"><span class="icon">${p.icon}</span><span>${p.text}</span></div>`).join("");
+  return`<div class="content"><div class="reframe-image">${s.emoji}</div><h1 class="q-title" style="text-align:center;">${s.title}</h1><p class="q-subtitle" style="text-align:center;">${s.body}</p><div class="testimonial-card" style="text-align:center;"><p class="testimonial-quote" style="font-size:15px;">"${s.quote}"</p><p class="testimonial-name">- ${s.quoteAuthor}</p></div><div class="plan-bullets" style="margin-top:16px;">${pts}</div></div><div class="footer-cta"><button class="btn-primary" onclick="goNext()">${s.cta}</button></div>`;
+}
+function renderPlanCards(plans){
+  return plans.map(p=>{const sel=selectedPlan===p.key;return`<div class="plan-card ${p.featured?'featured':''} ${sel?'selected':''}" onclick="selectPlan('${p.key}')">${p.tag?`<div class="plan-tag ${p.tag==='MEJOR PRECIO'?'amber':''}">${p.tag}</div>`:""}<div class="plan-radio ${sel?'checked':''}"></div><div class="plan-info"><div class="name">${p.name}</div>${p.sub?`<div class="plan-subpill">${p.sub}</div>`:""}<div class="plan-price-old"><span>${p.oldTotal}</span> <strong>${p.newTotal}</strong></div></div><div class="plan-price-new"><div class="old-per-day">${p.oldTotalPrice}</div><div class="amount">US$${p.newPriceWhole}<span class="decimal">${p.newPriceDecimal}</span><span class="per-day">por día</span></div></div></div>`;}).join("");
+}
+function renderMockups(s){
+  const m=s.mockups.map(x=>`<div class="mockup-phone"><span>${x.icon}</span><div class="mockup-label">${x.label}</div></div>`).join("");
+  return`<div class="content"><div class="coach-bubble"><div class="coach-avatar">✨</div><p>${s.coachExample}</p></div><h1 class="q-title" style="text-align:center;font-size:18px;">${s.title}</h1><p style="text-align:center;font-size:13px;color:var(--gray-text);line-height:1.6;">${s.body}</p><div class="mockup-row">${m}</div><p class="legal-text" style="margin-top:14px;">${s.billingLegal}</p></div><div class="footer-cta"><button class="btn-primary" onclick="goNext()">Continuar</button></div>`;
+}
+function renderTrustBadges(s){
+  const badges=s.badges.map(b=>`<div class="badge"><div class="number">${b.number}</div><div class="label">${b.label}</div>${b.stars?`<div class="stars">★★★★★</div>`:""}</div>`).join("");
+  const list=s.checklist.map(c=>`<div class="plan-bullet"><span class="icon" style="color:var(--green);">✓</span><span>${c}</span></div>`).join("");
+  return`<div class="content"><h1 class="q-title" style="text-align:center;">${s.title}</h1><div class="badges-row">${badges}</div><div class="plan-bullets">${list}</div><p style="text-align:center;font-weight:600;color:#4A1B0C;margin-top:16px;font-size:14px;">${s.closing}</p></div><div class="footer-cta"><button class="btn-primary" onclick="goNext()">Continuar</button></div>`;
+}
+function renderTestimonials(s){
+  const cards=s.testimonials.map(t=>`<div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><p class="testimonial-quote">${t.quote}</p><div class="testimonial-author-row"><div class="testimonial-avatar">${t.avatar||"👤"}</div><p class="testimonial-name">${t.name}</p></div></div>`).join("");
+  return`<div class="content"><h1 class="q-title" style="text-align:center;">${s.title}</h1>${cards}</div><div class="footer-cta"><button class="btn-primary" onclick="goNext()">Continuar</button></div>`;
+}
+function renderBeforeAfter(s){
+  return`<div class="content"><h1 class="q-title" style="text-align:center;">${s.title}</h1><div class="mockup-row" style="margin-top:14px;"><div class="mockup-phone" style="aspect-ratio:3/4;padding:0;overflow:hidden;"><img src="${s.beforeImg}" alt="Antes" style="width:100%;height:100%;object-fit:cover;border-radius:14px;" onerror="this.parentElement.innerHTML='<span style=font-size:40px>👨</span><div class=mockup-label>Antes</div>'"/><div class="mockup-label" style="position:absolute;bottom:8px;background:rgba(0,0,0,0.6);color:#fff;padding:2px 10px;border-radius:6px;">Antes</div></div><div class="mockup-phone" style="aspect-ratio:3/4;padding:0;overflow:hidden;"><img src="${s.afterImg}" alt="Después" style="width:100%;height:100%;object-fit:cover;border-radius:14px;" onerror="this.parentElement.innerHTML='<span style=font-size:40px>🏃</span><div class=mockup-label>Después</div>'"/><div class="mockup-label" style="position:absolute;bottom:8px;background:rgba(0,0,0,0.6);color:#fff;padding:2px 10px;border-radius:6px;">Después</div></div></div><div class="testimonial-card" style="margin-top:14px;"><p class="testimonial-quote">"${s.quote}"</p><p class="testimonial-name">- ${s.name}</p></div><p class="legal-text">${s.legal}</p></div><div class="footer-cta"><button class="btn-primary" onclick="goNext()">Continuar</button></div>`;
+}
+function renderFinalCta(s){
+  if(!selectedPlan)selectedPlan=s.defaultPlan;
+  const w=getWeightKg("weight")||0,unit=unitState.weight==="lb"?"lb":"kg";
+  const dw=unitState.weight==="lb"?Math.round(w/0.4536):w;
+  const levelMap={never:"Principiante",tried:"Intermedio",regular:"Avanzado"};
+  const level=levelMap[answers.fastingExperience]||"Intermedio";
+  const banner=s.banner?`<div class="discount-banner"><span class="banner-icon">${s.banner.icon}</span><p>${s.banner.html}</p></div>`:"";
+  return`<div class="content"><div class="finalcta-stats-row"><div class="stat-pill"><span class="icon">⏱️</span><span>${dw} ${unit}</span></div><div class="stat-divider"></div><div class="stat-pill"><span class="icon">📶</span><span>${level}</span></div></div>${banner}${renderPlanCards(s.plans)}<div class="guarantee-text">🛡️ ${s.guarantee}</div><button class="btn-primary" onclick="goToCheckout()" style="margin-bottom:14px;">${s.cta}</button><p class="legal-text" style="margin-bottom:16px;text-align:center;">${s.billingLegal}</p><div class="feedback-card neutral" style="text-align:center;"><strong>🛡️ ${s.guaranteeSeal}</strong>${s.guaranteeBody}</div></div>`;
+}
+function isDevMode(){try{return new URLSearchParams(window.location.search).get("dev")==="1";}catch(e){return false;}}
+function renderComplete(){
+  const debugBlock=isDevMode()?`<pre style="background:var(--gray-light);border-radius:12px;padding:14px;font-size:11px;text-align:left;width:100%;overflow-x:auto;white-space:pre-wrap;">${JSON.stringify({answers,numericValues,unitState,selectedPlan},null,2)}</pre>`:"";
+  return`<div class="content" style="justify-content:center;align-items:center;text-align:center;padding:60px 20px;"><div style="font-size:56px;margin-bottom:16px;">✅</div><h1 class="q-title">Onboarding completo</h1><p style="font-size:14px;color:var(--gray-text);line-height:1.6;margin-bottom:20px;">El perfil del usuario fue guardado y está listo.</p>${debugBlock}<button class="btn-secondary" style="margin-top:20px;" onclick="restartOnboarding()">Reiniciar prototipo</button></div>`;
+}
+async function restartOnboarding(){answers={};numericValues={};unitState={};selectedPlan="monthly";currentIndex=0;try{if(window.storage)await window.storage.set("bodyflow_profile",JSON.stringify({answers,numericValues,unitState,currentIndex}));}catch(e){}render();window.scrollTo(0,0);}
+
+// ============================================================
+// NUMERIC HANDLERS
+// ============================================================
+function setNumericValue(field,raw){
+  let v=parseFloat(raw);if(isNaN(v))v=0;numericValues[field]=v;
+  const s=SCREENS[currentIndex];
+  const btn=document.querySelector(".footer-cta .btn-primary");
+  if(btn&&s.field===field)btn.disabled=!v||v===0;
+  if(field==="weight"&&s.feedback&&s.feedback.dynamic==="bmi"){const el=document.querySelector(".feedback-card strong");if(el){const bmi=calcBMI();const cat=bmiCategory(bmi);el.textContent=s.feedback.icon+" "+s.feedback.titleTemplate.replace("{bmi}",bmi||"--").replace("{bmiCategory}",cat);}}
+}
+function commitNumericValue(field,raw){
+  const s=SCREENS.find(x=>x.field===field&&x.type==="numeric");
+  const mn=s.min??-Infinity,mx=s.max??Infinity;
+  let v=parseFloat(raw);if(isNaN(v))v=0;
+  numericValues[field]=Math.round(Math.max(mn,Math.min(mx,v))*10)/10;render();
+}
+function stepNumeric(field,dir){
+  const s=SCREENS.find(x=>x.field===field&&x.type==="numeric");
+  const step=s.step||1,mn=s.min??-Infinity,mx=s.max??Infinity;
+  let v=(numericValues[field]??s.defaultValue??0)+dir*step;
+  numericValues[field]=Math.round(Math.max(mn,Math.min(mx,v))*10)/10;render();
+}
+function setUnit(field,unit){
+  const old=unitState[field]||unit,v=numericValues[field]??0;
+  if(old!==unit){
+    if(unit==="lb"&&old==="kg")numericValues[field]=Math.round(v/0.4536);
+    if(unit==="kg"&&old==="lb")numericValues[field]=Math.round(v*0.4536);
+    if(unit==="ft"&&old==="cm")numericValues[field]=Math.round(v/30.48*10)/10;
+    if(unit==="cm"&&old==="ft")numericValues[field]=Math.round(v*30.48);
+  }
+  unitState[field]=unit;render();
+}
+function refreshFooter(){
+  const eb=document.getElementById("emailContinue"),ei=document.getElementById("emailInput");
+  if(eb&&ei)eb.disabled=!/\S+@\S+\.\S+/.test(ei.value);
+  const db=document.getElementById("dateContinue"),di=document.getElementById("dateInput");
+  if(db&&di)db.disabled=!di.value;
+}
+async function completeOnboarding(){setAnswer("selectedPlan",selectedPlan);setAnswer("completedAt",new Date().toISOString());await saveProfile();trackComplete();currentIndex=SCREENS.length;render();window.scrollTo(0,0);}
+async function goToCheckout(){
+  const s=SCREENS.find(x=>x.type==="finalCta");
+  const plan=s&&s.plans?s.plans.find(p=>p.key===selectedPlan):null;
+  setAnswer("selectedPlan",selectedPlan);setAnswer("completedAt",new Date().toISOString());
+  await saveProfile();
+  trackComplete();
+  if(plan&&plan.checkoutUrl){
+    if(isDevMode()){window.open(plan.checkoutUrl,"_blank");}
+    else{window.location.href=plan.checkoutUrl;}
+  }
+  else{currentIndex=SCREENS.length;render();window.scrollTo(0,0);}
+}
+
+// ============================================================
+// META PIXEL TRACKING
+// ============================================================
+function fbqSafe(cmd,name,params){try{if(typeof fbq==="function")fbq(cmd,name,params||{});}catch(e){}}
+function trackScreen(s,idx){
+  const screenName=`${idx+1}_${s.type}${s.field?'_'+s.field:''}`;
+  fbqSafe('trackCustom','OnboardingStep',{step_index:idx+1,step_type:s.type,step_field:s.field||null,screen_name:screenName,total_steps:SCREENS.length});
+  // Eventos estándar en hitos clave del funnel
+  if(s.type==="hero")fbqSafe('track','ViewContent',{content_name:'onboarding_start'});
+  if(s.type==="email")fbqSafe('track','Lead',{content_name:'email_step'});
+  if(s.type==="finalCta")fbqSafe('track','InitiateCheckout',{content_name:'final_cta',value:0,currency:'USD'});
+}
+function trackComplete(){
+  fbqSafe('track','CompleteRegistration',{content_name:'onboarding_complete',status:true});
+  fbqSafe('track','Purchase',{content_name:'plan_selected',content_ids:[selectedPlan],value:0,currency:'USD'});
+}
+function trackPlanSelect(k){fbqSafe('trackCustom','PlanSelected',{plan:k});}
+
+// ============================================================
+// MAIN RENDER
+// ============================================================
+function render(){
+  if(currentIndex>=SCREENS.length){app.innerHTML=`<div class="screen">${renderComplete()}</div>`;updateDevNav();return;}
+  const s=SCREENS[currentIndex];
+  trackScreen(s,currentIndex);
+  let body="";
+  switch(s.type){
+    case"hero": body=renderHero(); break;
+    case"gender": body=renderGender(s); break;
+    case"stat": body=renderStat(s); break;
+    case"multi": body=renderMulti(s); break;
+    case"single": body=renderSingle(s); break;
+    case"reframe": body=renderReframe(s); break;
+    case"numeric": body=renderNumeric(s); break;
+    case"date": body=renderDate(s); break;
+    case"bmiSummary": body=renderBmiSummary(s); break;
+    case"projection": body=renderProjection(s); break;
+    case"analyzing": body=renderAnalyzing(s); break;
+    case"microModal": body=renderMicroModal(s); break;
+    case"email": body=renderEmail(s); break;
+    case"optin": body=renderOptin(s); break;
+    case"planReady": body=renderPlanReady(s); break;
+    case"challenge": body=renderChallenge(s); break;
+    case"motivation": body=renderMotivation(s); break;
+    case"mockups": body=renderMockups(s); break;
+    case"trustBadges": body=renderTrustBadges(s); break;
+    case"testimonials": body=renderTestimonials(s); break;
+    case"beforeAfter": body=renderBeforeAfter(s); break;
+    case"finalCta": body=renderFinalCta(s); break;
+    default: body=`<div class="content">Tipo desconocido: ${s.type}</div>`;
+  }
+  app.innerHTML=`<div class="screen">${renderTopbar(s)}${body}</div>`;
+  if(s.type==="hero") setTimeout(initHeroAnimation,50);
+  updateDevNav();
+}
+
+function setupDevNav(){
+  if(!isDevMode()){const nav=document.getElementById("devNav");if(nav)nav.style.display="none";return;}
+  const j=document.getElementById("devJump");
+  j.innerHTML=SCREENS.map((s,i)=>`<option value="${i}">${i+1}. ${s.type}</option>`).join("")+`<option value="${SCREENS.length}">Completo</option>`;
+  document.getElementById("devPrev").onclick=goPrev;
+  document.getElementById("devNext").onclick=()=>{if(currentIndex<SCREENS.length)goNext();};
+  j.onchange=e=>goTo(parseInt(e.target.value,10));
+}
+function updateDevNav(){
+  if(!isDevMode())return;
+  const j=document.getElementById("devJump"),c=document.getElementById("devCounter");
+  if(j)j.value=Math.min(currentIndex,SCREENS.length);
+  if(c)c.textContent=`${Math.min(currentIndex+1,SCREENS.length+1)} / ${SCREENS.length+1}`;
+}
+
+(async function init(){await loadProfile();setupDevNav();render();})();
+</script>
+</body>
+</html>
